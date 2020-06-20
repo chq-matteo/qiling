@@ -37,6 +37,7 @@ class Qiling(QLCoreStructs, QLCoreHooks, QLCoreUtils):
             log_dir=None,
             log_split=None,
             loader_class=None,
+            os_class=None,
             append=None,
             libcache = False,
             stdin=0,
@@ -120,7 +121,7 @@ class Qiling(QLCoreStructs, QLCoreHooks, QLCoreUtils):
         if loader_class is None:
             self.loader = self.loader_setup()
         else:
-            self.loader(loader_class(self))
+            self.loader = loader_class(self)
         ############
         # setup    #
         ############           
@@ -175,8 +176,10 @@ class Qiling(QLCoreStructs, QLCoreHooks, QLCoreUtils):
         # Load architecture's and os module #
         #####################################
         self.arch = self.arch_setup()
-        self.os = self.os_setup()
-
+        if os_class is None:
+            self.os = self.os_setup()
+        else:
+            self.os = os_class(self)
         # Run the loader
         self.loader.run()
 
