@@ -36,6 +36,7 @@ class Qiling(QLCoreStructs, QLCoreHooks, QLCoreUtils):
             console=True,
             log_dir=None,
             log_split=None,
+            loader_class=None,
             append=None,
             libcache = False,
             stdin=0,
@@ -116,8 +117,10 @@ class Qiling(QLCoreStructs, QLCoreHooks, QLCoreUtils):
         ##########
         # Loader #
         ##########        
-        self.loader = self.loader_setup()
-
+        if loader_class is None:
+            self.loader = self.loader_setup()
+        else:
+            self.loader(loader_class(self))
         ############
         # setup    #
         ############           
