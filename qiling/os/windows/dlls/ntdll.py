@@ -225,6 +225,14 @@ def hook_RtlAllocateHeap(ql, address, params):
     ret = ql.os.heap.alloc(params["Size"])
     return ret
 
+@winapi(cc=STDCALL, params={
+    "HeapHandle": POINTER,
+    "Flags": UINT,
+    "BaseAddress": POINTER
+})
+def hook_RtlFreeHeap(ql, address, params):
+    ret = ql.os.heap.free(params["BaseAddress"])
+    return ret
 
 # wchar_t* wcsstr( const wchar_t* dest, const wchar_t* src );
 @winapi(cc=STDCALL, params={
